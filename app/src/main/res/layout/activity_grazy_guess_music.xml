@@ -17,6 +17,9 @@
         <!--Top-Bar-->
         <include layout="@layout/title_bar"/>
 
+        <!--唱片-->
+        <include layout="@layout/pan_layout"/>
+
     </LinearLayout>
 
 

@@ -91,7 +91,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBarOutAnim.setInterpolator(mBarOutLin);
         mBarOutAnim.setFillAfter(true);
 
-        handlePlayButton();
+
 
     }
 
@@ -172,6 +172,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         switch (v.getId()) {
 
             case R.id.btn_play_start:
+                handlePlayButton();
                 break;
             case R.id.btn_bar_back:
                 break;

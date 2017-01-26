@@ -1,11 +1,15 @@
 package com.asiainfo.crazyguessmusic.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +27,7 @@ import java.util.ArrayList;
 public class GrazyGuessMusicActivity extends Activity implements View.OnClickListener {
 
     private static final int COUNT_WORDS = 24;
+    private static final int COUNT_SELECT_WORDS = 4;
     /**
      * 与唱片相关动画
      */
@@ -56,6 +61,11 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     //
     private StrongerGridView mStrongerGridView;
+    private ArrayList<WordButton> mSelectWords;
+
+    //已选择文字框UI容器
+
+    private LinearLayout mViewContainer;
 
 
     @Override
@@ -67,7 +77,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         initListener();
         initDatas();
     }
-
 
 
     /**
@@ -84,6 +93,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mViewPan = (ImageView) findViewById(R.id.imv_play_pan);
         mViewPanBar = (ImageView) findViewById(R.id.imv_play_bar);
         mStrongerGridView = (StrongerGridView) findViewById(R.id.my_gridview);
+        mViewContainer = (LinearLayout) findViewById(R.id.word_select_container);
 
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -212,6 +222,16 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     public void initDatas() {
 
+        //初始化已选择框
+        mSelectWords = initWordSelect();
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(140, 140);
+
+        for (int i = 0; i < mSelectWords.size(); i++) {
+
+            mViewContainer.addView(mSelectWords.get(i).getViewBtn(), params);
+        }
+
         //获得数据
         mAllWords = initAllWord();
 
@@ -220,6 +240,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     }
 
+    /**
+     * 初始化待选文字框
+     */
     private ArrayList<WordButton> initAllWord() {
 
         ArrayList<WordButton> wordBtnList = new ArrayList<>();
@@ -238,6 +261,37 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         return wordBtnList;
 
+    }
+
+    /**
+     * 初始化已选文字框
+     */
+
+    private ArrayList<WordButton> initWordSelect() {
+
+        ArrayList<WordButton> wordBtnList = new ArrayList<>();
+
+        //获得所有待选文字
+        for (int i = 0; i < COUNT_SELECT_WORDS; i++) {
+
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = inflater.inflate(R.layout.self_view_grideview_item, null);
+
+
+            WordButton wordButton = new WordButton();
+
+            wordButton.mViewBtn = (Button) v.findViewById(R.id.item_btn);
+
+            wordButton.mViewBtn.setTextColor(Color.WHITE);
+            wordButton.mViewBtn.setText("");
+            wordButton.mIsVisible = false;
+            wordButton.mViewBtn.setBackgroundResource(R.drawable.game_wordblank);
+
+            wordBtnList.add(wordButton);
+
+
+        }
+        return wordBtnList;
     }
 
 

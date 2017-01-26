@@ -79,14 +79,17 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
         mPanLin = new LinearInterpolator();
         mPanAnim.setInterpolator(mPanLin);
+        mPanAnim.setFillAfter(true);
 
         mBarInAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_45);
         mBarInLin = new LinearInterpolator();
         mBarInAnim.setInterpolator(mBarInLin);
+        mBarInAnim.setFillAfter(true);
 
         mBarOutAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_d_45);
         mBarOutLin = new LinearInterpolator();
         mBarOutAnim.setInterpolator(mBarOutLin);
+        mBarOutAnim.setFillAfter(true);
 
         handlePlayButton();
 
@@ -98,22 +101,13 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBtnPlayStart.setOnClickListener(this);
         mBtnBarBack.setOnClickListener(this);
         mLlGameCoin.setOnClickListener(this);
-        mBarInAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+        initAnimListener();
+    }
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mViewPan.startAnimation(mPanAnim);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
+    private void initAnimListener() {
+        /**
+         * 对盘片动画的监听
+         */
         mPanAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -123,8 +117,29 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                mViewPanBar.startAnimation(mBarInAnim);
+                mViewPanBar.startAnimation(mBarOutAnim);
 
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        /**
+         * 对播放杆动画的监听
+         */
+
+        mBarInAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mViewPan.startAnimation(mPanAnim);
             }
 
             @Override

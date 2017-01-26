@@ -21,11 +21,11 @@ import java.util.List;
 
 public class StrongerGridView extends GridView {
 
-    private List<WordButton> mWordBtnList = new ArrayList<>();
+    public List<WordButton> mWordBtnList = new ArrayList<>();
 
-    private StrongerGridAdapter mStrongerGridAdapter;
+    public StrongerGridAdapter mStrongerGridAdapter;
 
-    private Context mContext;
+    public Context mContext;
 
     public StrongerGridView(Context context) {
         super(context);
@@ -36,13 +36,22 @@ public class StrongerGridView extends GridView {
         super(context, attrs);
         mStrongerGridAdapter = new StrongerGridAdapter();
         this.setAdapter(mStrongerGridAdapter);
-        mContext = context;
+        this.mContext = context;
 
 
     }
 
     public StrongerGridView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public void updateDatas(ArrayList<WordButton> mwordbuttons) {
+
+        this.mWordBtnList = mwordbuttons;
+
+        //重新设置数据源
+        setAdapter(mStrongerGridAdapter);
+
     }
 
     class StrongerGridAdapter extends BaseAdapter {
@@ -63,6 +72,7 @@ public class StrongerGridView extends GridView {
         public long getItemId(int position) {
             return 0;
         }
+
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -85,5 +95,4 @@ public class StrongerGridView extends GridView {
             return convertView;
         }
     }
-
 }

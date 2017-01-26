@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.asiainfo.crazyguessmusic.R;
+import com.asiainfo.crazyguessmusic.model.WordButton;
+import com.asiainfo.crazyguessmusic.view.StrongerGridView;
+
+import java.util.ArrayList;
 
 /**
  * 唱片相关动画
@@ -18,25 +22,20 @@ import com.asiainfo.crazyguessmusic.R;
 
 public class GrazyGuessMusicActivity extends Activity implements View.OnClickListener {
 
+    private static final int COUNT_WORDS = 24;
     /**
      * 与唱片相关动画
      */
     private Animation mPanAnim;
-
     //代表动画的运动速度
     private LinearInterpolator mPanLin;
-
     /**
      * 与播杆相关动画
      */
     private Animation mBarInAnim;
-
     private LinearInterpolator mBarInLin;
-
     private Animation mBarOutAnim;
-
     private LinearInterpolator mBarOutLin;
-
     /**
      * Play 按键处理事件
      *
@@ -46,14 +45,17 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private ImageButton mBtnPlayStart;
     private ImageButton mBtnBarBack;
     private LinearLayout mLlGameCoin;
-
     private ImageView mViewPan;
     private ImageView mViewPanBar;
-
     /**
      * 判断是否处于播放状态
      */
     private boolean mIsRunning = false;
+    //文字框容器
+    private ArrayList<WordButton> mAllWords;
+
+    //
+    private StrongerGridView mStrongerGridView;
 
 
     @Override
@@ -63,13 +65,15 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         initView();
         initListener();
+        initDatas();
     }
+
 
 
     /**
      * 初始化控件
      */
-    private void initView() {
+    public void initView() {
         /**
          *  初始化动画
          */
@@ -79,6 +83,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         mViewPan = (ImageView) findViewById(R.id.imv_play_pan);
         mViewPanBar = (ImageView) findViewById(R.id.imv_play_bar);
+        mStrongerGridView = (StrongerGridView) findViewById(R.id.my_gridview);
 
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -107,6 +112,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mLlGameCoin.setOnClickListener(this);
         initAnimListener();
     }
+
 
     private void initAnimListener() {
         /**
@@ -204,9 +210,42 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         //mViewPan.startAnimation();
     }
 
+    public void initDatas() {
+
+        //获得数据
+        mAllWords = initAllWord();
+
+        //更新数据---StrongerGridView
+        mStrongerGridView.updateDatas(mAllWords);
+
+    }
+
+    private ArrayList<WordButton> initAllWord() {
+
+        ArrayList<WordButton> wordBtnList = new ArrayList<>();
+
+        //获得所有待选文字
+        for (int i = 0; i < COUNT_WORDS; i++) {
+
+            WordButton wordButton = new WordButton();
+
+            wordButton.mWordStr = "小";
+
+            wordBtnList.add(wordButton);
+
+        }
+
+
+        return wordBtnList;
+
+    }
+
+
     @Override
     protected void onPause() {
         mViewPan.clearAnimation();
         super.onPause();
     }
+
+
 }

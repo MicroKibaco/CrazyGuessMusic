@@ -50,6 +50,11 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private ImageView mViewPan;
     private ImageView mViewPanBar;
 
+    /**
+     * 判断是否处于播放状态
+     */
+    private boolean mIsRunning = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +95,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBarOutLin = new LinearInterpolator();
         mBarOutAnim.setInterpolator(mBarOutLin);
         mBarOutAnim.setFillAfter(true);
-
 
 
     }
@@ -156,7 +160,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                mIsRunning = false;
+                mBtnPlayStart.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -186,11 +191,22 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     }
 
     /**
-     * 控制播杆和唱片的动画
+     * 控制播杆和唱片的动画,处理圆盘中间的播放按钮
      */
     private void handlePlayButton() {
 
-        mViewPanBar.startAnimation(mBarInAnim);
+        if (!mIsRunning && mViewPanBar != null) {
+            mIsRunning = true;
+            mViewPanBar.startAnimation(mBarInAnim);
+            mBtnPlayStart.setVisibility(View.INVISIBLE);
+        }
+
         //mViewPan.startAnimation();
+    }
+
+    @Override
+    protected void onPause() {
+        mViewPan.clearAnimation();
+        super.onPause();
     }
 }

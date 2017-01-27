@@ -56,7 +56,6 @@
                 android:layout_height="140dp"/>
 
         <ImageView
-
                 android:src="@drawable/game_disc_light"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"

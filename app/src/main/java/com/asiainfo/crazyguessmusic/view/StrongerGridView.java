@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -26,6 +28,8 @@ public class StrongerGridView extends GridView {
     public StrongerGridAdapter mStrongerGridAdapter;
 
     public Context mContext;
+
+    private Animation mScaleAnimation;
 
     public StrongerGridView(Context context) {
         super(context);
@@ -84,6 +88,12 @@ public class StrongerGridView extends GridView {
                 convertView = inflater.inflate(R.layout.self_view_grideview_item, null);
 
                 holder = mWordBtnList.get(position);
+
+                //加载动画
+                mScaleAnimation = AnimationUtils.loadAnimation(mContext, R.anim.scale);
+
+                //给动画设置延迟时间
+                mScaleAnimation.setStartOffset(position * 100);
                 holder.mIndex = position;
                 holder.mViewBtn = (Button) convertView.findViewById(R.id.item_btn);
                 convertView.setTag(holder);
@@ -92,6 +102,10 @@ public class StrongerGridView extends GridView {
                 holder = (WordButton) convertView.getTag();
             }
             holder.mViewBtn.setText(holder.mWordStr);
+
+            //动画的播放
+            convertView.startAnimation(mScaleAnimation);
+
             return convertView;
         }
     }

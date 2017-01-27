@@ -37,7 +37,12 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     public final static String TAG = "GrazyGuessMusicActivity";
 
     /**
-     * 答案状态 1.正确 2.错误 3.不完整
+     * <p>
+     *     答案状态
+     *     1.正确
+     *     2.错误
+     *     3.不完整
+     * </p>
      */
 
     public final static int STATUS_ANSWER_RIGHT = 1;

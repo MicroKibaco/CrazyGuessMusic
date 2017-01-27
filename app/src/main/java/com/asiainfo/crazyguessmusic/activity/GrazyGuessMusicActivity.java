@@ -25,6 +25,8 @@ import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 唱片相关动画
@@ -32,7 +34,19 @@ import java.util.Random;
 
 public class GrazyGuessMusicActivity extends Activity implements View.OnClickListener, IWordButtonClickListener {
 
-    public final static String TAG = GrazyGuessMusicActivity.class.getSimpleName();
+    public final static String TAG = "GrazyGuessMusicActivity";
+
+    /**
+     * 答案状态 1.正确 2.错误 3.不完整
+     */
+
+    public final static int STATUS_ANSWER_RIGHT = 1;
+    public final static int STATUS_ANSWER_WRONG = 2;
+    public final static int STATUS_ANSWER_LACK = 3;
+
+    //闪烁次数
+    private final static int SPASH_TIME = 6;
+
     private static final int COUNT_WORDS = 24;
     private static final int COUNT_SELECT_WORDS = 4;
     /**
@@ -300,6 +314,36 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     }
 
     /**
+     * 检查答案的状态
+     */
+    public int checkTheAnswer() {
+
+        //检查长度
+
+        for (int i = 0; i < mSelectWords.size(); i++) {
+            //如果有空的,说明答案不完整
+            if (mSelectWords.get(i).mWordStr.length() == 0) {
+
+                return STATUS_ANSWER_LACK;
+            }
+
+        }
+
+        //答案完整,继续检查正确性
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < mSelectWords.size(); i++) {
+
+            sb.append(mSelectWords.get(i).mWordStr);
+        }
+
+        return (sb.toString().equals(mCurrentSong.getSongName())) ?
+                STATUS_ANSWER_RIGHT : STATUS_ANSWER_WRONG;
+
+    }
+
+
+    /**
      * 初始化已选文字框
      */
 
@@ -349,6 +393,62 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     @Override
     public void onWordButtonClick(WordButton wordButton) {
         setSelectWord(wordButton);
+
+        //获取答案的状态
+        int checkResult = checkTheAnswer();
+
+        //检查答案
+        if (checkResult == STATUS_ANSWER_RIGHT) {
+            //过关并获得奖励
+
+        } else if (checkResult == STATUS_ANSWER_WRONG) {
+            //闪烁文字并提示用户
+            sparkTheWords();
+
+        } else if (checkResult == STATUS_ANSWER_LACK) {
+
+        }
+    }
+
+    /**
+     * 文字闪烁
+     */
+    public void sparkTheWords() {
+        //声明定时器
+
+        TimerTask task = new TimerTask() {
+            boolean mChange = false;
+            int mSparkTimes = 0;
+
+            @Override
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        //显示闪烁的次数
+
+                        if (++mSparkTimes > SPASH_TIME) {
+
+                            return;
+
+                        }
+
+                        //执行闪烁的逻辑:交替显示红色和白色
+                        for (int i = 0; i < mSelectWords.size(); i++) {
+                            mSelectWords.get(i).mViewBtn.setTextColor(mChange ? Color.RED : Color.WHITE);
+                        }
+                        mChange = !mChange;
+                    }
+                });
+
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(task, 1, 150);
+
     }
 
 
@@ -372,7 +472,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
                 mSelectWords.get(i).mIndex = wordButton.mIndex;
 
                 //增加一个相应的Log类
-                LogUtil.d(TAG, mSelectWords.get(i).mIndex + "");
+                LogUtil.e(TAG, mSelectWords.get(i).mIndex + "");
 
                 //设置待选框的可见性
                 setButtonVisible(wordButton, View.INVISIBLE);
@@ -394,9 +494,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         wordButton.mViewBtn.setVisibility(visibility);
         wordButton.mIsVisible = (visibility == View.VISIBLE);
 
-        LogUtil.d(TAG, wordButton.mIsVisible + "");
+        LogUtil.e(TAG, wordButton.mIsVisible + "");
     }
-
 
 
     /**

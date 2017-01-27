@@ -257,7 +257,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
             mBtnPlayStart.setVisibility(View.INVISIBLE);
         }
 
-        //mViewPan.startAnimation();
     }
 
 

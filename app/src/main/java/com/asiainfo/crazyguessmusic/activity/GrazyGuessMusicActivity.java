@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.asiainfo.crazyguessmusic.R;
+import com.asiainfo.crazyguessmusic.interfrc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
  * 唱片相关动画
  */
 
-public class GrazyGuessMusicActivity extends Activity implements View.OnClickListener {
+public class GrazyGuessMusicActivity extends Activity implements View.OnClickListener, IWordButtonClickListener {
 
     private static final int COUNT_WORDS = 24;
     private static final int COUNT_SELECT_WORDS = 4;
@@ -66,6 +67,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     //已选择文字框UI容器
 
     private LinearLayout mViewContainer;
+
 
 
     @Override
@@ -120,6 +122,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBtnPlayStart.setOnClickListener(this);
         mBtnBarBack.setOnClickListener(this);
         mLlGameCoin.setOnClickListener(this);
+        //
+        mStrongerGridView.registerOnWordButtonClick(this);
         initAnimListener();
     }
 
@@ -185,6 +189,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
             }
         });
+
     }
 
     @Override
@@ -302,4 +307,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     }
 
 
+    @Override
+    public void onWordButtonClick(WordButton wordButton) {
+
+    }
 }

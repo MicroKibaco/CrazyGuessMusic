@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.asiainfo.crazyguessmusic.R;
+import com.asiainfo.crazyguessmusic.interfrc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class StrongerGridView extends GridView {
     public Context mContext;
 
     private Animation mScaleAnimation;
+
+    private IWordButtonClickListener mIWordButtonClickListener;
 
     public StrongerGridView(Context context) {
         super(context);
@@ -58,6 +61,15 @@ public class StrongerGridView extends GridView {
 
     }
 
+    /**
+     * 注册监听接口
+     */
+    public void registerOnWordButtonClick(IWordButtonClickListener listener) {
+
+        mIWordButtonClickListener = listener;
+
+    }
+
     class StrongerGridAdapter extends BaseAdapter {
 
         @Override
@@ -81,7 +93,7 @@ public class StrongerGridView extends GridView {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            WordButton holder;
+            final WordButton holder;
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -96,6 +108,14 @@ public class StrongerGridView extends GridView {
                 mScaleAnimation.setStartOffset(position * 100);
                 holder.mIndex = position;
                 holder.mViewBtn = (Button) convertView.findViewById(R.id.item_btn);
+                holder.mViewBtn.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        mIWordButtonClickListener.onWordButtonClick(holder);
+                    }
+                });
+
                 convertView.setTag(holder);
 
             } else {

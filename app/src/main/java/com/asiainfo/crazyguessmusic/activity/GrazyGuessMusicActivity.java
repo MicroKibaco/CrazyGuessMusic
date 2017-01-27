@@ -375,6 +375,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      */
     private String[] generateWords() {
 
+        Random random = new Random();
+
         String[] words = new String[COUNT_WORDS];
 
         //存入歌名
@@ -390,6 +392,22 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         for (int i = mCurrentSong.getNameLength(); i < COUNT_WORDS; i++) {
 
             words[i] = getRandomChar() + "";
+
+        }
+
+        //打乱文字的顺序:首先从所有元素中随机选取一个与第一个元素进行交换
+        //然后在第二个数据之后选择一个元素,让它跟第二个数据进行交换,直到最后一个元素
+        //这个算法能够确保每一个元素每个位置的概率都是1/n
+
+        for (int i = COUNT_WORDS - 1; i >= 0; i--) {
+
+            int index = random.nextInt(i + 1);
+
+            String buf = words[index];
+
+            words[index] = words[i];
+
+            words[i] = buf;
 
         }
 

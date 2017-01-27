@@ -407,6 +407,11 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         } else if (checkResult == STATUS_ANSWER_LACK) {
 
+            //设置文字颜色为白色(Normal)
+            for (int i = 0; i < mSelectWords.size(); i++) {
+                mSelectWords.get(i).mViewBtn.setTextColor(Color.WHITE);
+            }
+
         }
     }
 

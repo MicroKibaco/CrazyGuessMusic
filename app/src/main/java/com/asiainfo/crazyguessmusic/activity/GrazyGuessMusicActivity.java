@@ -214,6 +214,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
             case R.id.ll_game_coin:
                 break;
+
             default:
                 break;
 
@@ -311,7 +312,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
             View v = inflater.inflate(R.layout.self_view_grideview_item, null);
 
 
-            WordButton wordButton = new WordButton();
+            final WordButton wordButton = new WordButton();
 
             wordButton.mViewBtn = (Button) v.findViewById(R.id.item_btn);
 
@@ -319,6 +320,12 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
             wordButton.mViewBtn.setText("");
             wordButton.mIsVisible = false;
             wordButton.mViewBtn.setBackgroundResource(R.drawable.game_wordblank);
+            wordButton.mViewBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clearTheAnswear(wordButton);
+                }
+            });
 
             wordBtnList.add(wordButton);
 
@@ -414,6 +421,19 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         }
 
         return str.charAt(0);
+    }
+
+    /**
+     * 清除文本框的答案
+     */
+    private void clearTheAnswear(WordButton wordButton) {
+
+        wordButton.mViewBtn.setText("");
+        wordButton.mWordStr = "";
+        wordButton.mIsVisible = false;
+
+        //设置待选框的可见性
+        setButtonVisible(mAllWords.get(wordButton.mIndex), View.VISIBLE);
     }
 
     /**

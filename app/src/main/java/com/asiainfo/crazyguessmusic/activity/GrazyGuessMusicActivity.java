@@ -337,8 +337,54 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     @Override
     public void onWordButtonClick(WordButton wordButton) {
+        setSelectWord(wordButton);
+    }
+
+
+    /**
+     * 设置答案
+     */
+    private void setSelectWord(WordButton wordButton) {
+
+        for (int i = 0; i < mSelectWords.size(); i++) {
+
+            /**
+             * 设置答案文字框的内容和可见性
+             */
+            if (mSelectWords.get(i).mWordStr.length() == 0) {
+
+                mSelectWords.get(i).mViewBtn.setText(wordButton.mWordStr);
+                mSelectWords.get(i).mIsVisible = true;
+                mSelectWords.get(i).mWordStr = wordButton.mWordStr;
+
+                //记录索引
+                mSelectWords.get(i).mIndex = wordButton.mIndex;
+
+                //增加一个相应的Log类
+                //Log.e("GrazyGuessMusicActivity",)
+
+                //设置待选框的可见性
+                setButtonVisible(wordButton, View.INVISIBLE);
+
+                break;
+
+
+            }
+
+        }
 
     }
+
+    /**
+     * 设置待选文字框是否可见
+     */
+    private void setButtonVisible(WordButton wordButton, int visibility) {
+
+        wordButton.mViewBtn.setVisibility(visibility);
+        wordButton.mIsVisible = (visibility == View.VISIBLE);
+    }
+
+
 
     /**
      * 生成随机汉字

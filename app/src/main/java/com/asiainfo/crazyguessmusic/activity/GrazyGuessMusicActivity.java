@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.asiainfo.crazyguessmusic.R;
+import com.asiainfo.crazyguessmusic.data.Const;
 import com.asiainfo.crazyguessmusic.interfc.IWordButtonClickListener;
+import com.asiainfo.crazyguessmusic.model.Songs;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 
@@ -67,6 +69,14 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     //已选择文字框UI容器
 
     private LinearLayout mViewContainer;
+
+    //当前的歌曲
+    private Songs mCurrentSong;
+
+    //当前关的索引
+    private int mCurrentStageIndex = 5;
+
+    //
 
 
 
@@ -225,7 +235,11 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         //mViewPan.startAnimation();
     }
 
+
     public void initDatas() {
+
+        //读取当前关的歌曲信息
+        mCurrentSong = loadStageSongInfo(++mCurrentStageIndex);
 
         //初始化已选择框
         mSelectWords = initWordSelect();
@@ -242,6 +256,19 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         //更新数据---StrongerGridView
         mStrongerGridView.updateDatas(mAllWords);
+
+    }
+
+    private Songs loadStageSongInfo(int stageIndex) {
+
+        Songs songs = new Songs();
+
+        String[] stage = Const.SONG_INFO[stageIndex];
+
+        songs.setSongFileName(stage[Const.INDEX_FILE_NAME]);
+        songs.setSongName(stage[Const.INDEX_SONG_NAME]);
+
+        return songs;
 
     }
 
@@ -277,7 +304,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         ArrayList<WordButton> wordBtnList = new ArrayList<>();
 
         //获得所有待选文字
-        for (int i = 0; i < COUNT_SELECT_WORDS; i++) {
+        for (int i = 0; i < mCurrentSong.getNameLength(); i++) {
 
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.self_view_grideview_item, null);

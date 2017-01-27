@@ -19,6 +19,7 @@ import com.asiainfo.crazyguessmusic.data.Const;
 import com.asiainfo.crazyguessmusic.interfc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.Songs;
 import com.asiainfo.crazyguessmusic.model.WordButton;
+import com.asiainfo.crazyguessmusic.utils.LogUtil;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 
 import java.io.UnsupportedEncodingException;
@@ -31,6 +32,7 @@ import java.util.Random;
 
 public class GrazyGuessMusicActivity extends Activity implements View.OnClickListener, IWordButtonClickListener {
 
+    public final static String TAG = GrazyGuessMusicActivity.class.getSimpleName();
     private static final int COUNT_WORDS = 24;
     private static final int COUNT_SELECT_WORDS = 4;
     /**
@@ -80,7 +82,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grazy_guess_music);
 
@@ -337,8 +339,10 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     @Override
     protected void onPause() {
+
         mViewPan.clearAnimation();
         super.onPause();
+
     }
 
 
@@ -368,7 +372,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
                 mSelectWords.get(i).mIndex = wordButton.mIndex;
 
                 //增加一个相应的Log类
-                //Log.e("GrazyGuessMusicActivity",)
+                LogUtil.d(TAG, mSelectWords.get(i).mIndex + "");
 
                 //设置待选框的可见性
                 setButtonVisible(wordButton, View.INVISIBLE);
@@ -389,6 +393,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         wordButton.mViewBtn.setVisibility(visibility);
         wordButton.mIsVisible = (visibility == View.VISIBLE);
+
+        LogUtil.d(TAG, wordButton.mIsVisible + "");
     }
 
 

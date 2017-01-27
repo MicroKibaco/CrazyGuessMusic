@@ -25,5 +25,7 @@
 
     </LinearLayout>
 
+    <!--过关界面,答案正确界面-->
+    <include layout="@layout/answer_right"/>
 
 </FrameLayout>

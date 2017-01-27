@@ -94,6 +94,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     //当前关的索引
     private int mCurrentStageIndex = 5;
 
+    //代表过关界面
+    private LinearLayout mPassView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +124,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mViewPanBar = (ImageView) findViewById(R.id.imv_play_bar);
         mStrongerGridView = (StrongerGridView) findViewById(R.id.my_gridview);
         mViewContainer = (LinearLayout) findViewById(R.id.word_select_container);
+        mPassView = (LinearLayout) findViewById(R.id.answer_right);
 
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -275,6 +279,17 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     }
 
+    /**
+     * 处理过关界面和事件
+     */
+
+    private void handlePassEvent() {
+
+        mPassView.setVisibility(View.VISIBLE);
+
+    }
+
+
     private Songs loadStageSongInfo(int stageIndex) {
 
         Songs songs = new Songs();
@@ -400,6 +415,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         //检查答案
         if (checkResult == STATUS_ANSWER_RIGHT) {
             //过关并获得奖励
+            handlePassEvent();
 
         } else if (checkResult == STATUS_ANSWER_WRONG) {
             //闪烁文字并提示用户

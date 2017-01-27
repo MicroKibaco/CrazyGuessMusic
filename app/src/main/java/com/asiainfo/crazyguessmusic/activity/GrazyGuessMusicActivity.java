@@ -21,7 +21,9 @@ import com.asiainfo.crazyguessmusic.model.Songs;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * 唱片相关动画
@@ -75,9 +77,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     //当前关的索引
     private int mCurrentStageIndex = 5;
-
-    //
-
 
 
     @Override
@@ -280,16 +279,18 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         ArrayList<WordButton> wordBtnList = new ArrayList<>();
 
         //获得所有待选文字
+
+        String[] words = generateWords();
+
         for (int i = 0; i < COUNT_WORDS; i++) {
 
             WordButton wordButton = new WordButton();
 
-            wordButton.mWordStr = "小";
+            wordButton.mWordStr = words[i];
 
             wordBtnList.add(wordButton);
 
         }
-
 
         return wordBtnList;
 
@@ -337,5 +338,61 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     @Override
     public void onWordButtonClick(WordButton wordButton) {
 
+    }
+
+    /**
+     * 生成随机汉字
+     */
+    private char getRandomChar() {
+
+        String str = "";
+        int highPos;
+        int lowPos;
+
+        Random r = new Random();
+
+        highPos = (176 + Math.abs(r.nextInt(39)));
+
+        lowPos = (161 + Math.abs(r.nextInt(93)));
+
+        byte[] bytes = new byte[2];
+
+        bytes[0] = (Integer.valueOf(highPos)).byteValue();
+
+        bytes[1] = (Integer.valueOf(lowPos)).byteValue();
+
+        try {
+            str = new String(bytes, "GBK");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return str.charAt(0);
+    }
+
+    /**
+     * 生成所有的待选文字
+     */
+    private String[] generateWords() {
+
+        String[] words = new String[COUNT_WORDS];
+
+        //存入歌名
+
+        for (int i = 0; i < mCurrentSong.getNameLength(); i++) {
+
+            words[i] = mCurrentSong.getNameCharacters()[i] + "";
+
+        }
+
+        //获取随机文字并存入数组中
+
+        for (int i = mCurrentSong.getNameLength(); i < COUNT_WORDS; i++) {
+
+            words[i] = getRandomChar() + "";
+
+        }
+
+        return words;
     }
 }

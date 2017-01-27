@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.asiainfo.crazyguessmusic.R;
-import com.asiainfo.crazyguessmusic.interfrc.IWordButtonClickListener;
+import com.asiainfo.crazyguessmusic.interfc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 
 import java.util.ArrayList;

@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.asiainfo.crazyguessmusic.R;
-import com.asiainfo.crazyguessmusic.interfrc.IWordButtonClickListener;
+import com.asiainfo.crazyguessmusic.interfc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 

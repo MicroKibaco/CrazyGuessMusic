@@ -1,9 +1,9 @@
-package com.asiainfo.crazyguessmusic.interfrc;
+package com.asiainfo.crazyguessmusic.interfc;
 
 import com.asiainfo.crazyguessmusic.model.WordButton;
 
 /**
- * Created by MicroKibaco on 1/27/17.
+ * 文字的点击事件
  */
 
 public interface IWordButtonClickListener {

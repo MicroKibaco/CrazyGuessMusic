@@ -38,12 +38,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     public final static String TAG = "GrazyGuessMusicActivity";
 
     /**
-     * <p>
-     *     答案状态
-     *     1.正确
-     *     2.错误
-     *     3.不完整
-     * </p>
+     * <p> 答案状态 1.正确 2.错误 3.不完整 </p>
      */
 
     public final static int STATUS_ANSWER_RIGHT = 1;
@@ -102,6 +97,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     //代表过关界面
     private LinearLayout mPassView;
 
+    private ImageButton mBtnDeleteword;
+    private ImageButton mBtnTipword;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +128,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mViewContainer = (LinearLayout) findViewById(R.id.word_select_container);
         mPassView = (LinearLayout) findViewById(R.id.answer_right);
         mViewCorrentCoins = (TextView) findViewById(R.id.txt_bar_coins);
-
+        mBtnDeleteword = (ImageButton) findViewById(R.id.btn_delete_word);
+        mBtnTipword = (ImageButton) findViewById(R.id.btn_tip_word);
 
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -157,6 +156,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBtnPlayStart.setOnClickListener(this);
         mBtnBarBack.setOnClickListener(this);
         mLlGameCoin.setOnClickListener(this);
+        mBtnDeleteword.setOnClickListener(this);
+        mBtnTipword.setOnClickListener(this);
         //
         mStrongerGridView.registerOnWordButtonClick(this);
         initAnimListener();
@@ -239,6 +240,17 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
                 break;
 
             case R.id.ll_game_coin:
+                break;
+
+            case R.id.btn_delete_word:
+
+                handleDeleteWord();
+
+                break;
+            case R.id.btn_tip_word:
+
+                handleTipAnswer();
+
                 break;
 
             default:
@@ -610,5 +622,135 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         }
 
         return words;
+    }
+
+    /**
+     * 处理删除待选文字事件
+     */
+    private void handleDeleteWord() {
+
+        deleteOneWord();
+    }
+
+    /**
+     * 处理提示按键的事件
+     */
+    private void handleTipAnswer() {
+
+        tipOneWord();
+    }
+
+    /**
+     * 增加或者减少指定数量的金币
+     */
+
+    private boolean handleCoins(int data) {
+
+        //判断当前总的金币数量是否可被减少
+        if (mCurrentCoins++ + data >= 0) {
+
+            mCurrentCoins += data;
+            mViewCorrentCoins.setText(mCurrentCoins + "");
+            return true;
+
+        } else {
+
+            //金币不够
+
+            return false;
+        }
+    }
+
+    /**
+     * 配置文件中删除花费金币数量
+     */
+    private int getDeleteWordCoins() {
+        return this.getResources().getInteger(R.integer.pay_delete_word);
+
+    }
+
+    /**
+     * 配置文件中提示字体花费的金币数量
+     */
+    private int getTipAnswerCoins() {
+        return this.getResources().getInteger(R.integer.pay_tip_answer);
+
+    }
+
+    /**
+     * 删除文字所花费的金币数量
+     */
+    private void deleteOneWord() {
+
+        //减少金币
+        if (handleCoins(-getDeleteWordCoins())) {
+
+            //金币不够显示提示对话框
+            return;
+        }
+        //将这个索引对应的待选文字框设置为不可见
+        setButtonVisible(findNotAnswer(), View.INVISIBLE);
+    }
+
+    /**
+     * 找到一个不是答案的文件,并且当前是可见的
+     */
+    private WordButton findNotAnswer() {
+
+        Random random = new Random();
+
+        WordButton buf = null;
+
+        while (true) {
+
+            int index = random.nextInt(COUNT_WORDS);
+
+            buf = mAllWords.get(index);
+
+            if (buf.mIsVisible && !isTheAnswerWord(buf)) {
+
+                return buf;
+            }
+
+        }
+
+
+    }
+
+    /**
+     * 判断某个文字是否为答案
+     */
+
+    public boolean isTheAnswerWord(WordButton wordButton) {
+
+        boolean result = false;
+
+        for (int i = 0; i < mCurrentSong.getNameLength(); i++) {
+
+            if (wordButton.mWordStr.equals
+                    ("" + mCurrentSong.getNameCharacters()[i])) {
+
+                result = true;
+                break;
+            }
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 删除文字所花费的金币数量
+     */
+    private void tipOneWord() {
+
+        //减少金币
+        if (handleCoins(-getDeleteWordCoins())) {
+
+            //金币不够显示提示对话框
+
+        }
+
     }
 }

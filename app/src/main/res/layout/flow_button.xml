@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:background="@color/dark"
                 android:layout_height="match_parent">
 
     <LinearLayout
@@ -13,10 +12,12 @@
 
         <FrameLayout
 
+                android:id="@+id/id_fr_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
             <ImageButton
+                    android:id="@+id/btn_delete_word"
                     android:background="@drawable/delete_button_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -32,10 +33,11 @@
             </ImageButton>
 
             <TextView
+                    android:id="@+id/tv_pay_delete_word"
                     android:textSize="11sp"
                     android:textColor="@color/white"
                     android:layout_gravity="bottom|right"
-                    android:text="1000"
+                    android:text="@integer/pay_delete_word"
                     android:textStyle="bold"
                     android:layout_marginRight="9dp"
                     android:layout_marginBottom="8dp"
@@ -45,11 +47,12 @@
         </FrameLayout>
 
         <FrameLayout
-
+                android:id="@+id/id_fr_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
             <ImageButton
+                    android:id="@+id/btn_tip_word"
                     android:background="@drawable/tip_button_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -65,10 +68,11 @@
             </ImageButton>
 
             <TextView
+                    android:id="@+id/tv_pay_tip_word"
                     android:textSize="11sp"
                     android:textColor="@color/white"
                     android:layout_gravity="bottom|right"
-                    android:text="1000"
+                    android:text="@integer/pay_tip_answer"
                     android:textStyle="bold"
                     android:layout_marginRight="9dp"
                     android:layout_marginBottom="8dp"
@@ -91,6 +95,7 @@
                 android:layout_height="wrap_content"/>
 
         <TextView
+                android:id="@+id/text_current_stage"
                 android:layout_gravity="center"
                 android:text="1"
                 android:textStyle="bold"

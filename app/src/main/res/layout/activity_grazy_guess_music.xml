@@ -24,6 +24,10 @@
         <include layout="@layout/music_word_select"/>
 
     </LinearLayout>
+
+    <!--浮动按钮-->
+    <include layout="@layout/flow_button"/>
+
     <!--过关界面,答案正确界面-->
     <include layout="@layout/answer_right"/>
 

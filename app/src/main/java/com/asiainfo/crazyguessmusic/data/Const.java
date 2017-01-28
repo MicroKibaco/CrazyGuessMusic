@@ -10,6 +10,8 @@ public class Const {
 
     public static final int INDEX_SONG_NAME = 1;
 
+    public static final int TOTAL_COINS = 999;
+
     public static final String SONG_INFO[][] = {
 
             {"__00000.mp3", "不要说话"}, {"__00001.mp3", "感激"},

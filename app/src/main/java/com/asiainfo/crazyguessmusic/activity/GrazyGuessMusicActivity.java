@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.asiainfo.crazyguessmusic.R;
 import com.asiainfo.crazyguessmusic.data.Const;
@@ -54,6 +55,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     private static final int COUNT_WORDS = 24;
     private static final int COUNT_SELECT_WORDS = 4;
+    //当前金币的数量
+    public int mCurrentCoins = Const.TOTAL_COINS;
     /**
      * 与唱片相关动画
      */
@@ -84,24 +87,20 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private boolean mIsRunning = false;
     //文字框容器
     private ArrayList<WordButton> mAllWords;
-
+    //金币view
+    private TextView mViewCorrentCoins;
     //
     private StrongerGridView mStrongerGridView;
-    private ArrayList<WordButton> mSelectWords;
 
     //已选择文字框UI容器
-
+    private ArrayList<WordButton> mSelectWords;
     private LinearLayout mViewContainer;
-
     //当前的歌曲
     private Songs mCurrentSong;
-
     //当前关的索引
     private int mCurrentStageIndex = 5;
-
     //代表过关界面
     private LinearLayout mPassView;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,6 +129,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mStrongerGridView = (StrongerGridView) findViewById(R.id.my_gridview);
         mViewContainer = (LinearLayout) findViewById(R.id.word_select_container);
         mPassView = (LinearLayout) findViewById(R.id.answer_right);
+        mViewCorrentCoins = (TextView) findViewById(R.id.txt_bar_coins);
+
 
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -261,6 +262,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
 
     public void initDatas() {
+        mViewCorrentCoins.setText(mCurrentCoins + "");
 
         //读取当前关的歌曲信息
         mCurrentSong = loadStageSongInfo(++mCurrentStageIndex);

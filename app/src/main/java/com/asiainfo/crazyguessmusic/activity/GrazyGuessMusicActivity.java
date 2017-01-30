@@ -100,6 +100,10 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private ImageButton mBtnDeleteword;
     private ImageButton mBtnTipword;
 
+    private ImageButton mBtnNext;
+    private ImageButton mBtnShare;
+
+    private TextView mCurrentStageView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +136,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mViewCorrentCoins = (TextView) findViewById(R.id.txt_bar_coins);
         mBtnDeleteword = (ImageButton) findViewById(R.id.btn_delete_word);
         mBtnTipword = (ImageButton) findViewById(R.id.btn_tip_word);
+        mBtnNext = (ImageButton) findViewById(R.id.btn_next);
+        mBtnShare = (ImageButton) findViewById(R.id.btn_share);
+        mCurrentStageView = (TextView) findViewById(R.id.text_current_stage);
 
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -160,6 +167,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mLlGameCoin.setOnClickListener(this);
         mBtnDeleteword.setOnClickListener(this);
         mBtnTipword.setOnClickListener(this);
+        mBtnNext.setOnClickListener(this);
+        mBtnShare.setOnClickListener(this);
         //
         mStrongerGridView.registerOnWordButtonClick(this);
         initAnimListener();
@@ -254,6 +263,26 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
                 handleTipAnswer();
 
                 break;
+            case R.id.btn_next:
+
+                if (JudegAppPassed()) {
+
+                    //进入通关界面
+
+                } else {
+
+                    //开始新一关
+                    mPassView.setVisibility(View.GONE);
+
+                    //加载关卡数据
+                    initDatas();
+
+                }
+
+                break;
+            case R.id.btn_share:
+
+                break;
 
             default:
                 break;
@@ -274,6 +303,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     }
 
+    /**
+     * 加载当前关的数据
+     */
 
     public void initDatas() {
         handleDeleteWord();
@@ -287,9 +319,20 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(140, 140);
 
+        //清空原来的答案
+        mViewContainer.removeAllViews();
+
         for (int i = 0; i < mSelectWords.size(); i++) {
 
             mViewContainer.addView(mSelectWords.get(i).getViewBtn(), params);
+        }
+
+        //显示当前关的索引
+
+        if (mCurrentStageView != null) {
+
+            mCurrentStageView.setText((mCurrentStageIndex + 1) + "");
+
         }
 
         //获得数据
@@ -760,5 +803,12 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         }
 
+    }
+
+    /**
+     * 判断是否通关
+     */
+    private boolean JudegAppPassed() {
+        return (mCurrentStageIndex == Const.SONG_INFO.length - 1);
     }
 }

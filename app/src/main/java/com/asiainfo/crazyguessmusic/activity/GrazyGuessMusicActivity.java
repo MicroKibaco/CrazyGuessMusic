@@ -654,7 +654,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private boolean handleCoins(int data) {
 
         //判断当前总的金币数量是否可被减少
-        if (mCurrentCoins + data >= 0) {
+        if (mCurrentCoins + data <= 0) {
 
             mCurrentCoins += data;
             mViewCorrentCoins.setText(mCurrentCoins + "");

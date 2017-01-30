@@ -108,6 +108,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         initView();
         initListener();
         initDatas();
+        handleDeleteWord();
+
     }
 
 
@@ -244,7 +246,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
             case R.id.btn_delete_word:
 
-                handleDeleteWord();
+                //handleDeleteWord();
 
                 break;
             case R.id.btn_tip_word:
@@ -629,7 +631,12 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      */
     private void handleDeleteWord() {
 
-        deleteOneWord();
+        mBtnDeleteword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteOneWord();
+            }
+        });
     }
 
     /**
@@ -647,7 +654,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private boolean handleCoins(int data) {
 
         //判断当前总的金币数量是否可被减少
-        if (mCurrentCoins++ + data >= 0) {
+        if (mCurrentCoins + data >= 0) {
 
             mCurrentCoins += data;
             mViewCorrentCoins.setText(mCurrentCoins + "");

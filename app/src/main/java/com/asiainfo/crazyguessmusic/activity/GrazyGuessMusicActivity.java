@@ -108,7 +108,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         initView();
         initListener();
         initDatas();
-        handleDeleteWord();
+
 
     }
 
@@ -276,6 +276,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
 
     public void initDatas() {
+        handleDeleteWord();
         mViewCorrentCoins.setText(mCurrentCoins + "");
 
         //读取当前关的歌曲信息

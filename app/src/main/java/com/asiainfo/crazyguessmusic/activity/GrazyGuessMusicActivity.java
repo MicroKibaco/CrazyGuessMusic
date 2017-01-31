@@ -150,8 +150,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         //处理提示按键的事件
         // handleTipAnswer();
 
-        //一开始播放音乐
-        handlePlayButton();
+
 
     }
 
@@ -363,7 +362,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      */
 
     public void initDatas() {
-        handleDeleteWord();
+
+
         mViewCorrentCoins.setText(mCurrentCoins + "");
 
         //读取当前关的歌曲信息
@@ -398,6 +398,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         //更新数据---StrongerGridView
         mStrongerGridView.updateDatas(mAllWords);
 
+        //一开始播放音乐
+        handlePlayButton();
+
     }
 
     /**
@@ -407,6 +410,12 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private void handlePassEvent() {
 
         mPassView.setVisibility(View.VISIBLE);
+
+        //停止未完成的动画
+        mViewPan.clearAnimation();
+
+        //停止播放的音乐
+        MyPlayer.stopTheSong(this);
 
 
         //显示当前关的索引

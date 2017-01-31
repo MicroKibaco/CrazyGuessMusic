@@ -21,6 +21,7 @@ import com.asiainfo.crazyguessmusic.interfc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.Songs;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 import com.asiainfo.crazyguessmusic.utils.LogUtil;
+import com.asiainfo.crazyguessmusic.utils.Util;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 
 import java.io.UnsupportedEncodingException;
@@ -106,6 +107,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private TextView mCurrentStageView;
     private TextView mCurrentStageSongName;
     private TextView mCurrentStagePassView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -271,7 +273,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
                 if (JudegAppPassed()) {
 
-
+                    Util.startActivity(this, AppPassActivity.class);
 
                 } else {
 

@@ -30,4 +30,10 @@ public class Const {
 
     };
 
+    public static final String FILE_NAME_SAVE_DATA = "data.dat";
+
+    public static final int INDEX_LOAD_DATA_STAGE = 0;
+
+    public static final int INDEX_LOAD_DATA_COINS = 1;
+
 }

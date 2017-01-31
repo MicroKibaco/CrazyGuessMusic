@@ -754,7 +754,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      * 配置文件中删除花费金币数量
      */
     private int getDeleteWordCoins() {
-        return this.getResources().getInteger(R.integer.pay_tip_answer);
+        return this.getResources().getInteger(R.integer.pay_delete_word);
 
     }
 
@@ -857,11 +857,11 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         switch (id) {
 
             case ID_DIALOG_DELETE_WORD:
-                Util.showDialog(this, "确认花掉" + getDeleteWordCoins() + "个金币去掉一个错误答案", mBtnOkDeleteWordListener);
+                Util.showDialog(this, "确认花掉" + getDeleteWordCoins() + "个金币去掉一个错误答案?", mBtnOkDeleteWordListener);
                 break;
 
             case ID_DIALOG_TIP_ANSWER:
-                Util.showDialog(this, "确认花掉" + getTipAnswerCoins() + "个金币获得一个文字提示", mBtnTipLackCoinsListener);
+                Util.showDialog(this, "确认花掉" + getTipAnswerCoins() + "个金币获得一个文字提示?", mBtnTipLackCoinsListener);
 
                 break;
 

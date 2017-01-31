@@ -357,7 +357,23 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         mPassView.setVisibility(View.VISIBLE);
 
-        mCurrentStagePassView.setText((mCurrentStageIndex + 1) + "");
+
+        //显示当前关的索引
+
+        if (mCurrentStagePassView != null) {
+
+            mCurrentStagePassView.setText((mCurrentStageIndex + 1) + "");
+
+        }
+
+        //显示当前关的歌曲名称
+
+        if (mCurrentStageSongName != null && mCurrentSong != null) {
+
+            mCurrentStageSongName.setText(mCurrentSong.getSongName() + "");
+
+        }
+
 
     }
 

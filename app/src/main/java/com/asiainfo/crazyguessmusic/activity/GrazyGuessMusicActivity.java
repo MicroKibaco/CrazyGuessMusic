@@ -259,6 +259,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
             public void onAnimationEnd(Animation animation) {
                 mIsRunning = false;
                 mBtnPlayStart.setVisibility(View.VISIBLE);
+                MyPlayer.stopTheSong(GrazyGuessMusicActivity.this);
             }
 
             @Override
@@ -324,15 +325,28 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      * 控制播杆和唱片的动画,处理圆盘中间的播放按钮
      */
     private void handlePlayButton() {
+        if (mViewPanBar != null) {
 
-        if (!mIsRunning && mViewPanBar != null) {
-            mIsRunning = true;
-            mViewPanBar.startAnimation(mBarInAnim);
-            mBtnPlayStart.setVisibility(View.INVISIBLE);
+            if (!mIsRunning) {
+                mIsRunning = true;
 
-            MyPlayer.playSong(this, mCurrentSong.getSongFileName());
+                //开始播杆进入动画
+                mViewPanBar.startAnimation(mBarInAnim);
+                /**
+                 * @Test:
+                 *  ①点击播放按钮音乐是否可以正常播放
+                 *  ②到下一关,音乐可以正常播放
+                 *  ③在同样一关,多次点击按钮可以重复播放
+                 *  ④.进入后台,音乐需要暂停
+                 */
 
+                MyPlayer.playSong(this, mCurrentSong.getSongFileName());
+                mBtnPlayStart.setVisibility(View.INVISIBLE);
+
+
+            }
         }
+
 
     }
 

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.asiainfo.crazyguessmusic.R;
 import com.asiainfo.crazyguessmusic.data.Const;
+import com.asiainfo.crazyguessmusic.interfc.IAlertDialogButtonListener;
 import com.asiainfo.crazyguessmusic.interfc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.Songs;
 import com.asiainfo.crazyguessmusic.model.WordButton;
@@ -51,8 +52,19 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     private static final int COUNT_WORDS = 24;
     private static final int COUNT_SELECT_WORDS = 4;
+    private final static int ID_DIALOG_DELETE_WORD = 1;
+    private final static int ID_DIALOG_TIP_ANSWER = 2;
+    private final static int ID_DIALOG_LACK_COINS = 3;
     //当前金币的数量
     public int mCurrentCoins = Const.TOTAL_COINS;
+    //答案提示
+    IAlertDialogButtonListener mBtnOkLackCoinsListener = new IAlertDialogButtonListener() {
+        @Override
+        public void OnClick() {
+            //执行事件
+
+        }
+    };
     /**
      * 与唱片相关动画
      */
@@ -85,25 +97,39 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private ArrayList<WordButton> mAllWords;
     //金币view
     private TextView mViewCorrentCoins;
+    //答案提示
+    IAlertDialogButtonListener mBtnTipLackCoinsListener = new IAlertDialogButtonListener() {
+        @Override
+        public void OnClick() {
+            //执行事件
+            tipOneWord();
+
+        }
+    };
     //
     private StrongerGridView mStrongerGridView;
-
     //已选择文字框UI容器
     private ArrayList<WordButton> mSelectWords;
     private LinearLayout mViewContainer;
     //当前的歌曲
     private Songs mCurrentSong;
+    //自定义事件响应
+    //删除错误答案
+    IAlertDialogButtonListener mBtnOkDeleteWordListener = new IAlertDialogButtonListener() {
+        @Override
+        public void OnClick() {
+            //执行事件
+            deleteOneWord();
+        }
+    };
     //当前关的索引
     private int mCurrentStageIndex = 5;
     //代表过关界面
     private LinearLayout mPassView;
-
     private ImageButton mBtnDeleteword;
     private ImageButton mBtnTipword;
-
     private ImageButton mBtnNext;
     private ImageButton mBtnShare;
-
     private TextView mCurrentStageView;
     private TextView mCurrentStageSongName;
     private TextView mCurrentStagePassView;
@@ -119,7 +145,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
 
     }
-
 
     /**
      * 初始化控件
@@ -165,7 +190,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     }
 
-
     private void initListener() {
 
         mBtnPlayStart.setOnClickListener(this);
@@ -179,7 +203,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mStrongerGridView.registerOnWordButtonClick(this);
         initAnimListener();
     }
-
 
     private void initAnimListener() {
         /**
@@ -371,7 +394,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     }
 
-
     private Songs loadStageSongInfo(int stageIndex) {
 
         Songs songs = new Songs();
@@ -439,7 +461,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     }
 
-
     /**
      * 初始化已选文字框
      */
@@ -477,7 +498,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         return wordBtnList;
     }
 
-
     @Override
     protected void onPause() {
 
@@ -485,7 +505,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         super.onPause();
 
     }
-
 
     @Override
     public void onWordButtonClick(WordButton wordButton) {
@@ -554,7 +573,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     }
 
-
     /**
      * 设置答案
      */
@@ -599,7 +617,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
         LogUtil.e(TAG, wordButton.mIsVisible + "");
     }
-
 
     /**
      * 生成随机汉字
@@ -696,7 +713,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBtnDeleteword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteOneWord();
+                //  deleteOneWord();
+                //显示删除对话框
+                showConfirmDialog(ID_DIALOG_DELETE_WORD);
             }
         });
     }
@@ -706,7 +725,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      */
     private void handleTipAnswer() {
 
-        tipOneWord();
+        showConfirmDialog(ID_DIALOG_TIP_ANSWER);
+        //  tipOneWord();
     }
 
     /**
@@ -720,13 +740,13 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
             mCurrentCoins += data;
             mViewCorrentCoins.setText(mCurrentCoins + "");
-            return false;
+            return true;
 
         } else {
 
             //金币不够
 
-            return true;
+            return false;
         }
     }
 
@@ -752,9 +772,10 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private void deleteOneWord() {
 
         //减少金币
-        if (handleCoins(-getDeleteWordCoins())) {
+        if (!handleCoins(-getDeleteWordCoins())) {
 
             //金币不够显示提示对话框
+            showConfirmDialog(ID_DIALOG_LACK_COINS);
             return;
         }
         //将这个索引对应的待选文字框设置为不可见
@@ -829,4 +850,31 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private boolean JudegAppPassed() {
         return (mCurrentStageIndex == Const.SONG_INFO.length - 1);
     }
+
+    //金币不足
+    private void showConfirmDialog(int id) {
+
+        switch (id) {
+
+            case ID_DIALOG_DELETE_WORD:
+                Util.showDialog(this, "确认花掉" + getDeleteWordCoins() + "个金币去掉一个错误答案", mBtnOkDeleteWordListener);
+                break;
+
+            case ID_DIALOG_TIP_ANSWER:
+                Util.showDialog(this, "确认花掉" + getTipAnswerCoins() + "个金币获得一个文字提示", mBtnTipLackCoinsListener);
+
+                break;
+
+            case ID_DIALOG_LACK_COINS:
+                Util.showDialog(this, "金币不足,去商店补充?", mBtnOkLackCoinsListener);
+
+                break;
+
+            default:
+                break;
+
+        }
+
+    }
+
 }

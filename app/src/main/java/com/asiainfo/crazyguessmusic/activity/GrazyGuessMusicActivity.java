@@ -754,7 +754,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      * 配置文件中删除花费金币数量
      */
     private int getDeleteWordCoins() {
-        return this.getResources().getInteger(R.integer.pay_delete_word);
+        return this.getResources().getInteger(R.integer.pay_tip_answer);
 
     }
 

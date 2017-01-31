@@ -22,6 +22,7 @@ import com.asiainfo.crazyguessmusic.interfc.IWordButtonClickListener;
 import com.asiainfo.crazyguessmusic.model.Songs;
 import com.asiainfo.crazyguessmusic.model.WordButton;
 import com.asiainfo.crazyguessmusic.utils.LogUtil;
+import com.asiainfo.crazyguessmusic.utils.MyPlayer;
 import com.asiainfo.crazyguessmusic.utils.Util;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 
@@ -328,6 +329,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
             mIsRunning = true;
             mViewPanBar.startAnimation(mBarInAnim);
             mBtnPlayStart.setVisibility(View.INVISIBLE);
+
+            MyPlayer.playSong(this, mCurrentSong.getSongFileName());
+
         }
 
     }
@@ -502,6 +506,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     protected void onPause() {
 
         mViewPan.clearAnimation();
+
+        //暂停音乐
+        MyPlayer.stopTheSong(this);
         super.onPause();
 
     }

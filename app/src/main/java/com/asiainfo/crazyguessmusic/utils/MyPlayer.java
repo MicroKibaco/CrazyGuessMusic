@@ -17,7 +17,7 @@ import java.io.IOException;
 public class MyPlayer {
 
 
-    private static MyPlayer ourInstance = new MyPlayer();
+    //private static MyPlayer ourInstance = new MyPlayer();
 
     //歌曲播放
     private static MediaPlayer mMusicMediaPlayer;
@@ -25,7 +25,7 @@ public class MyPlayer {
     private MyPlayer() {
     }
 
-    private static void playSong(Context context, String fileName) {
+    public static void playSong(Context context, String fileName) {
 
         if (mMusicMediaPlayer == null) {
 
@@ -53,6 +53,13 @@ public class MyPlayer {
 
     }
 
+    /**
+     * @date 1/31/17 22:34
+     * @Method 音乐的暂停
+     * @description MyPlayer
+     * @author MicroKibaco
+     */
+
     public static void stopTheSong(Context context) {
 
         if (mMusicMediaPlayer != null) {
@@ -63,7 +70,8 @@ public class MyPlayer {
 
     }
 
-    public static MyPlayer genstance() {
+ /*   public static MyPlayer genstance() {
+        if (ourInstance == null){}
         return ourInstance;
-    }
+    }*/
 }

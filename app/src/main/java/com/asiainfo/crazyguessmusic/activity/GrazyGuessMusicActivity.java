@@ -104,6 +104,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private ImageButton mBtnShare;
 
     private TextView mCurrentStageView;
+    private TextView mCurrentStageSongName;
+    private TextView mCurrentStagePassView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +141,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBtnNext = (ImageButton) findViewById(R.id.btn_next);
         mBtnShare = (ImageButton) findViewById(R.id.btn_share);
         mCurrentStageView = (TextView) findViewById(R.id.text_current_stage);
+        mCurrentStageSongName = (TextView) findViewById(R.id.text_current_song_name);
+        mCurrentStagePassView = (TextView) findViewById(R.id.text_current_stage_pass);
 
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -267,7 +271,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
                 if (JudegAppPassed()) {
 
-                    //进入通关界面
+
 
                 } else {
 
@@ -322,6 +326,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         //清空原来的答案
         mViewContainer.removeAllViews();
 
+
+        //增加新的答案框
         for (int i = 0; i < mSelectWords.size(); i++) {
 
             mViewContainer.addView(mSelectWords.get(i).getViewBtn(), params);
@@ -350,6 +356,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private void handlePassEvent() {
 
         mPassView.setVisibility(View.VISIBLE);
+
+        mCurrentStagePassView.setText((mCurrentStageIndex + 1) + "");
 
     }
 

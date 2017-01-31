@@ -144,6 +144,14 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         initListener();
         initDatas();
 
+        //处理删除按键的事件
+        handleDeleteWord();
+
+        //处理提示按键的事件
+        // handleTipAnswer();
+
+        //一开始播放音乐
+        handlePlayButton();
 
     }
 

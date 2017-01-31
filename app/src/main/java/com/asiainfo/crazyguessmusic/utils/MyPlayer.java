@@ -16,8 +16,19 @@ import java.io.IOException;
 
 public class MyPlayer {
 
+    //索引
+    public final static int INDEX_STONE_ENTER = 0;
+    public final static int INDEX_STONE_CANCEL = 1;
+    public final static int INDEX_STONE_COIN = 2;
 
-    //private static MyPlayer ourInstance = new MyPlayer();
+    //音效的文件名
+    private final static String SONGNAME[] = {"enter.mp3", "cancel.mp3", "coin.mp3",};
+
+    //private static MyPlayer ourInstane = new MyPlayer();
+
+    //音效
+    private static MediaPlayer[] mToneMediaPlayer
+            = new MediaPlayer[SONGNAME.length];
 
     //歌曲播放
     private static MediaPlayer mMusicMediaPlayer;
@@ -50,6 +61,43 @@ public class MyPlayer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    /**
+     * @date 2/1/17 00:43
+     * @Method 播放声音效果
+     * @description 播放音效, 按点击的声音, 无须反复加载
+     * @author MicroKibaco
+     */
+
+    public static void playTone(Context context, int index) {
+
+        //加载声音文件
+        AssetManager assertmanager = context.getAssets();
+
+        if (mToneMediaPlayer[index] == null) {
+
+            mToneMediaPlayer[index] = new MediaPlayer();
+
+
+            try {
+
+                AssetFileDescriptor assetFileDescriptor = assertmanager.openFd(SONGNAME[index]);
+                mToneMediaPlayer[index].setDataSource(assetFileDescriptor.getFileDescriptor(),
+                        assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
+
+                mToneMediaPlayer[index].prepare();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            mToneMediaPlayer[index].start();
+
+        }
+
 
     }
 

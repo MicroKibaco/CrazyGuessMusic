@@ -417,6 +417,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         //停止播放的音乐
         MyPlayer.stopTheSong(this);
 
+        //播放音效
+        MyPlayer.playTone(this, MyPlayer.INDEX_STONE_COIN);
+
 
         //显示当前关的索引
         mCurrentStagePassView.setText(mCurrentStagePassView == null ?

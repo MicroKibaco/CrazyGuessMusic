@@ -151,13 +151,18 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         // handleTipAnswer();
 
 
-
     }
 
     /**
      * 初始化控件
      */
     public void initView() {
+
+        //读取数据
+        int[] datas = Util.loadData(this);
+        mCurrentStageIndex = datas[Const.INDEX_LOAD_DATA_STAGE];
+        mCurrentCoins = datas[Const.INDEX_LOAD_DATA_COINS];
+
         /**
          *  初始化动画
          */
@@ -538,6 +543,9 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
 
     @Override
     protected void onPause() {
+
+        //保存游戏数据
+        Util.saveDatas(this, mCurrentStageIndex - 1, mCurrentCoins);
 
         mViewPan.clearAnimation();
 

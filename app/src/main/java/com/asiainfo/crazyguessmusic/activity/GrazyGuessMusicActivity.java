@@ -24,6 +24,7 @@ import com.asiainfo.crazyguessmusic.model.WordButton;
 import com.asiainfo.crazyguessmusic.utils.LogUtil;
 import com.asiainfo.crazyguessmusic.utils.MyPlayer;
 import com.asiainfo.crazyguessmusic.utils.Util;
+import com.asiainfo.crazyguessmusic.utils.WeXinUtil;
 import com.asiainfo.crazyguessmusic.view.StrongerGridView;
 
 import java.io.UnsupportedEncodingException;
@@ -79,6 +80,8 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private LinearInterpolator mBarInLin;
     private Animation mBarOutAnim;
     private LinearInterpolator mBarOutLin;
+
+    private ImageButton mBtnShare;
     /**
      * Play 按键处理事件
      *
@@ -130,7 +133,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private ImageButton mBtnDeleteword;
     private ImageButton mBtnTipword;
     private ImageButton mBtnNext;
-    private ImageButton mBtnShare;
+    private ImageButton mBtnShareWeiXin;
     private TextView mCurrentStageView;
     private TextView mCurrentStageSongName;
     private TextView mCurrentStagePassView;
@@ -183,7 +186,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mCurrentStageView = (TextView) findViewById(R.id.text_current_stage);
         mCurrentStageSongName = (TextView) findViewById(R.id.text_current_song_name);
         mCurrentStagePassView = (TextView) findViewById(R.id.text_current_stage_pass);
-
+        mBtnShareWeiXin = (ImageButton) findViewById(R.id.btn_share_weixin);
 
         mPanAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
         mPanLin = new LinearInterpolator();
@@ -212,6 +215,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
         mBtnTipword.setOnClickListener(this);
         mBtnNext.setOnClickListener(this);
         mBtnShare.setOnClickListener(this);
+        mBtnShareWeiXin.setOnClickListener(this);
         //
         mStrongerGridView.registerOnWordButtonClick(this);
         initAnimListener();
@@ -326,12 +330,33 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
                 break;
             case R.id.btn_share:
 
+                handleShareWeiXin();
+
+                break;
+
+            case R.id.btn_share_weixin:
+
+                handleShareWeiXin();
+
                 break;
 
             default:
                 break;
 
         }
+    }
+
+    /**
+     * @date 2/1/17 11:55
+     * @Method 处理微信分享的逻辑
+     * @description GrazyGuessMusicActivity
+     * @author MicroKibaco
+     */
+
+    private void handleShareWeiXin() {
+
+        WeXinUtil.getInstance(this).sentRequest("我们正在玩疯狂猜歌游戏,一起来玩吧!!!");
+
     }
 
     /**

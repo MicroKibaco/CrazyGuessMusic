@@ -107,6 +107,7 @@
     </FrameLayout>
 
     <ImageButton
+            android:id="@+id/btn_share_weixin"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/share_button_icon"

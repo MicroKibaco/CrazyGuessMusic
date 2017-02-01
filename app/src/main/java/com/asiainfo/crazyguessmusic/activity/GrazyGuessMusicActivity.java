@@ -291,6 +291,7 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
                 handlePlayButton();
                 break;
             case R.id.btn_bar_back:
+                finish();
                 break;
 
             case R.id.ll_game_coin:

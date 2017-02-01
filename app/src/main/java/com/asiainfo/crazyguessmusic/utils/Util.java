@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import com.asiainfo.crazyguessmusic.R;
 import com.asiainfo.crazyguessmusic.data.Const;
 import com.asiainfo.crazyguessmusic.interfc.IAlertDialogButtonListener;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
@@ -166,4 +168,11 @@ public class Util {
 
     }
 
+    public static byte[] bmpToByteArray(Bitmap thumbBmp, boolean iSconver) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        thumbBmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
+
+    }
 }

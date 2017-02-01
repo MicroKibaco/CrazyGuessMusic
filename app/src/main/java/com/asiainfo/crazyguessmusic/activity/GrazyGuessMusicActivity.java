@@ -101,15 +101,6 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private ArrayList<WordButton> mAllWords;
     //金币view
     private TextView mViewCorrentCoins;
-    //答案提示
-    IAlertDialogButtonListener mBtnTipLackCoinsListener = new IAlertDialogButtonListener() {
-        @Override
-        public void OnClick() {
-            //执行事件
-            tipOneWord();
-
-        }
-    };
     //
     private StrongerGridView mStrongerGridView;
     //已选择文字框UI容器
@@ -137,6 +128,15 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
     private TextView mCurrentStageView;
     private TextView mCurrentStageSongName;
     private TextView mCurrentStagePassView;
+    //答案提示
+    IAlertDialogButtonListener mBtnTipLackCoinsListener = new IAlertDialogButtonListener() {
+        @Override
+        public void OnClick() {
+            //执行事件
+            tipOneWord();
+
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -910,14 +910,51 @@ public class GrazyGuessMusicActivity extends Activity implements View.OnClickLis
      */
     private void tipOneWord() {
 
-        //减少金币
-        if (handleCoins(-getDeleteWordCoins())) {
+        boolean isFind = false;
+        //金币不够显示提示对话框
+        for (int i = 0; i < mSelectWords.size(); i++) {
 
-            //金币不够显示提示对话框
+            if (mSelectWords.get(i).mWordStr.length() == 0) {
 
+                WordButton wordButton = findRightWord(i);
+
+                if (handleCoins(-getTipAnswerCoins())) {
+
+                    isFind = true;
+                    onWordButtonClick(wordButton);
+
+                } else {
+
+                    //金币不够,弹出对话框
+                    showConfirmDialog(ID_DIALOG_LACK_COINS);
+
+                }
+                break;
+            }
+        }
+        if (!isFind) {
+            sparkTheWords();
         }
 
     }
+
+
+    /**
+     * 根据已选框的索引获取一个正确答案的汉字
+     */
+    private WordButton findRightWord(int index) {
+
+        for (int i = 0; i < mAllWords.size(); i++) {
+
+            if (mAllWords.get(i).mWordStr.equals("" + mCurrentSong.getNameCharacters()[index])) {
+
+                return mAllWords.get(i);
+
+            }
+        }
+        return null;
+    }
+
 
     /**
      * 判断是否通关

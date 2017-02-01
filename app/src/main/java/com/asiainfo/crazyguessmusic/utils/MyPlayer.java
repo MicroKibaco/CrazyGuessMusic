@@ -20,9 +20,10 @@ public class MyPlayer {
     public final static int INDEX_STONE_ENTER = 0;
     public final static int INDEX_STONE_CANCEL = 1;
     public final static int INDEX_STONE_COIN = 2;
+    public final static int INDEX_STONE_BEGIN = 3;
 
     //音效的文件名
-    private final static String SONGNAME[] = {"enter.mp3", "cancel.mp3", "coin.mp3",};
+    private final static String SONGNAME[] = {"enter.mp3", "cancel.mp3", "coin.mp3", "begin.m4a"};
 
     //private static MyPlayer ourInstane = new MyPlayer();
 

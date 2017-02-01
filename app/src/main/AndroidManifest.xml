@@ -14,7 +14,7 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-        <activity android:name=".activity.GrazyGuessMusicActivity">
+        <activity android:name=".activity.LaucherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -23,6 +23,13 @@
         </activity>
         <activity
                 android:name=".activity.AppPassActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:launchMode="singleTop"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"
+                />
+        <activity
+                android:name=".activity.GrazyGuessMusicActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait"
